@@ -10,47 +10,26 @@
 
 class Tree {
     int findCeil(Node root, int key)
-    {
-       List<Integer> arr=new ArrayList<Integer>();
-       pre(root,arr);
-       Collections.sort(arr);
-       return ceil(arr,key);
+    {  int ceil=-1;
+    while(root!=null){
+            if(root.data==key)
+            {
+                ceil=root.data;
+                return ceil;
+                    
+            }
+           
         
-    }
-    void pre(Node root,List<Integer> arr)
+    if(root.data<key)
     {
-        if(root==null)
-        {
-            return;
-        }
-        arr.add(root.data);
-        pre(root.left,arr);
-        pre(root.right,arr);
+        root=root.right;
+   
     }
-    int ceil(List<Integer> arr,int a)
-    {
-        int i,j;
+    else
+    {   
+           ceil=root.data;
+             root=root.left;
+    }}
+    return ceil;
     
-        j=arr.size()-1;
-        i=0;
-        while(i<=j)
-        {
-            int mid=i+(j-i)/2;
-            if(arr.get(mid)<a)
-            {
-                i=mid+1;
-                
-            }
-            else
-            {
-                j=mid-1;
-            }
-        }
-        if(i==arr.size())
-        {
-            return -1;
-        }
-        return arr.get(i);
-    }
-    
-}
+}}
