@@ -34,11 +34,11 @@ class Solution {
         if(root.left==null&&root.right==null)
         {
             this.b[0]=Math.max(this.b[0],count);
-            count--;
+            
         }
         count++;
         isheight(root.left,count);
         isheight(root.right,count);
-        count--;
+        
     }
 }
