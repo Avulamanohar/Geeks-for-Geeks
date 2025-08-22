@@ -11,80 +11,72 @@ class Node
     }
 }
 */
-import java.util.*;
-class Solution {
-    ArrayList<Integer> boundaryTraversal(Node node)
-    {
-       ArrayList<Integer> arr=new ArrayList<Integer>();
-        arr.add(node.data);
-        Left(arr,node.left);
-        Leaf(arr,node.left);
-        Leaf(arr,node.right);
 
-        
-        ArrayList<Integer>arr2=new ArrayList<Integer>();
-        Right(arr2,node.right);
-        Collections.reverse(arr2);
-         arr.addAll(arr2);
-         return arr;
-        
-        
-        
+class Solution {
+    ArrayList<Integer> boundaryTraversal(Node node) 
+    {
+        ArrayList<Integer> arr=new ArrayList<>();
+        arr.add(node.data);
+        if(node.left==null&&node.right==null)
+        {
+            return arr;
+        }
+        l(node.left,arr);
+        leaf(node,arr);
+        r(node.right,arr);
+        return arr;
         
     }
-    
-    public void Left(ArrayList<Integer> arr,Node node)
+    void l(Node root,ArrayList<Integer> arr)
     {
-        if(node==null ||(node.left==null&&node.right==null))
+        
+        if(root==null||root.left==null&&root.right==null)
         {
             return;
         }
-        
-        
-        arr.add(node.data);
-        
-        if(node.left!=null)
+         arr.add(root.data);
+        if(root.left!=null)
         {
-            
-            Left(arr,node.left);
+           
+            l(root.left,arr);
         }
         else
         {
-            Left(arr,node.right);
+           l(root.right,arr);
         }
+        
     }
-    public void Leaf(ArrayList<Integer> arr,Node node)
+        
+         void r(Node root,ArrayList<Integer> arr)
     {
-        if(node==null)
-        {
-            return;
-        }
-        if(node.left==null&&node.right==null)
-        {
-        arr.add(node.data);
-        }
-        Leaf(arr,node.left);
-        Leaf(arr,node.right);
-    }
-    public void Right(ArrayList<Integer> arr,Node node)
-    {
-        if(node==null ||(node.left==null&&node.right==null))
+        
+        if(root==null||root.left==null&&root.right==null)
         {
             return;
         }
         
-        
-        arr.add(node.data);
-        
-        if(node.right!=null)
+        if(root.right!=null)
         {
-            
-            Right(arr,node.right);
+           
+            r(root.right,arr);
         }
-        else 
+        else
         {
-            Right(arr,node.left);
+           r(root.left,arr);
         }
-        
+         arr.add(root.data);
+    }
+    void leaf(Node root,ArrayList<Integer> arr)
+    {
+        if(root==null)
+        {
+            return;
+        }
+        if(root.left==null&&root.right==null)
+        {
+            arr.add(root.data);
+        }
+        leaf(root.left,arr);
+        leaf(root.right,arr);
     }
 }
