@@ -1,68 +1,66 @@
 /*
-class Node
-{
-    int data; //data of the node
-    int hd; //horizontal distance of the node
-    Node left, right; //left and right references
+class Node {
+    int data;
+    Node left;
+    Node right;
 
-    // Constructor of tree node
-    public Node(int key)
-    {
-        data = key;
-        hd = Integer.MAX_VALUE;
-        left = right = null;
+    Node(int data) {
+        this.data = data;
+        left = null;
+        right = null;
     }
 }
 */
-class tuple{
-    Node node;
-    int row;
-    public tuple(Node node,int row)
+class tuple
+{
+    int n;
+    Node r;
+    tuple(int n,Node r)
     {
-        this.node=node;
-        this.row=row;
+        this.n=n;
+        this.r=r;
     }
 }
 class Solution {
-    
-    public ArrayList<Integer> bottomView(Node root)
-    {
+    public ArrayList<Integer> bottomView(Node root) {
+        Map<Integer,Integer> map=new TreeMap<>();
+         ArrayList<Integer> arr1=new ArrayList<>();
+         if(root==null)
+         {
+             return arr1;
+         }
         Queue<tuple> q=new LinkedList<>();
-        ArrayList<Integer> arr=new ArrayList<>();
-        TreeMap<Integer,Integer> map=new TreeMap<>();
-        if(root==null)
-        {
-            return arr;
-        }
-        q.add(new tuple(root,0));
+        tuple tr=new tuple(0,root);
+        q.add(tr);
         while(!q.isEmpty())
         {
-            tuple t=q.poll();
-            Node nod=t.node;
-            int r=t.row;
-            if(!map.containsKey(r))
+            for(int i=0;i<q.size();i++)
             {
-                map.put(r,0);
+                tuple t=q.poll();
+                int ind=t.n;
+                Node rt=t.r;
+                map.put(ind,rt.data);
+                if(rt.left!=null)
+                {
+                    tuple tv=new tuple(ind-1,rt.left);
+                q.add(tv);
+                }
+                if(rt.right!=null)
+                {tuple ts=new tuple(ind+1,rt.right);
+                    q.add(ts);
+                }
+                
+                
             }
-           
-                map.put(r,nod.data);
-                if(nod.left!=null)
-                {
-                    q.add(new tuple(nod.left,r-1));
-                }
-             if(nod.right!=null)
-                {
-                    q.add(new tuple(nod.right,r+1));
-                }
-            
-            
         }
-        for(int k:map.values())
-        {
-            arr.add(k);
-        }
+        ArrayList<Integer> arr=new ArrayList<>(map.keySet());
+       
         
-        return arr;
+        for(int i:arr)
+        {
+            arr1.add(map.get(i));
+        }
+        return arr1;
         
     }
     
